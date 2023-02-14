@@ -1,0 +1,32 @@
+﻿@model Electronics_Product_Sales.Models.Cart
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <h1>Thank you  for ordering </h1>
+    <h3>Your order number is: @Model.OrderId</h3>
+
+    @foreach (var product in Model.Products)
+    {
+
+        <div class="col-lg-12">
+            <div class="card border-primary mb-3" style="width: 100%;">
+                <img src="~/products/@product.ImageUrl" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">@product.ProductName</h5>
+                    <p class="card-text"> $ @product.ProductPrice </p>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    }
+
+
+</div>

@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Electronics_Product_Sales.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Products</h1>
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Add New Product</a>
+    </p>
+}
+
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3">
+                    <div class="card border-primary mb-3">
+                        <img src="~/products/@Html.DisplayFor(modelItem => item.ImageUrl)" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h5>
+                            <p class="card-text"> $  @Html.DisplayFor(modelItem => item.ProductPrice)</p>
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("User"))
+                            {
+                                <a href="/Carts/Add/@Html.DisplayFor(modelItem => item.Id)" class="btn btn-primary">Add To Cart</a>
+                            }
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">View</a>
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
